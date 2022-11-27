@@ -61,6 +61,7 @@ def attempt(email, pw, wait, slots):
     checkbox.send_keys(Keys.RETURN)
 
     # Land in appointment page, click "Continue"
+    WebDriverWait(driver, timeout=3).until(EC.element_to_be_clickable((By.LINK_TEXT, "Continue")))
     continue_link = driver.find_element(By.LINK_TEXT, 'Continue')
     continue_link.click()
 
@@ -68,6 +69,10 @@ def attempt(email, pw, wait, slots):
     cur_url = driver.current_url
     appointment_url = cur_url.replace("continue_actions", "appointment")
     driver.get(appointment_url)
+    
+    WebDriverWait(driver, timeout=3).until(EC.element_to_be_clickable((By.NAME, "commit")))
+    continue_link = driver.find_element(By.NAME, 'commit')
+    continue_link.click()
 
     # Get appointment date selection box
     driver.implicitly_wait(0.3)
@@ -183,3 +188,4 @@ if __name__ == "__main__":
         else:
             print("SUCCEED!!! Booked a slot in {} months".format(result))
             break
+        
